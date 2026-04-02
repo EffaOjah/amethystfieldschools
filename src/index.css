@@ -1,0 +1,44 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #662D91;
+  --color-on-primary: #ffffff;
+  --color-secondary: #121212;
+  --color-on-secondary: #ffffff;
+  --color-accent: #FFD700;
+  --color-surface: #ffffff;
+  --color-on-surface: #121212;
+  --color-surface-variant: #f8f0ff;
+  --color-on-surface-variant: #4b2c6d;
+  --color-outline: #FFD700;
+  --color-background: #ffffff;
+  --font-headline: "Manrope", sans-serif;
+  --font-body: "Work Sans", sans-serif;
+  --font-label: "Work Sans", sans-serif;
+  --radius-DEFAULT: 0.5rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-full: 9999px;
+}
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+body {
+  font-family: var(--font-body);
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-headline);
+  letter-spacing: -0.02em;
+}
+
+.carousel-overlay {
+  background: linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.9) 100%);
+}
+
+.instagram-grid img {
+  aspect-ratio: 1/1;
+  object-fit: cover;
+}

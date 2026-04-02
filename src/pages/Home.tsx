@@ -1,0 +1,35 @@
+import TopNav from '../components/TopNav'
+import Hero from '../components/Hero'
+import WhatWeOffer from '../components/WhatWeOffer'
+import Statistics from '../components/Statistics'
+import AboutUs from '../components/AboutUs'
+import Testimonials from '../components/Testimonials'
+import Extracurriculars from '../components/Extracurriculars'
+import LatestPost from '../components/LatestPost'
+import Partners from '../components/Partners'
+import CallToAction from '../components/CallToAction'
+import Footer from '../components/Footer'
+import PageTransition from '../components/PageTransition'
+import Reveal from '../components/Reveal'
+
+export default function Home() {
+  return (
+    <PageTransition>
+      <div className="bg-white text-on-surface font-body min-h-screen">
+        <TopNav />
+        <main>
+          <Hero />
+          <Reveal delay={0.1}><WhatWeOffer /></Reveal>
+          <Reveal delay={0.1}><Statistics /></Reveal>
+          <Reveal delay={0.1} direction="left"><AboutUs /></Reveal>
+          <Reveal delay={0.1} direction="right"><Testimonials /></Reveal>
+          <Reveal delay={0.1}><Extracurriculars /></Reveal>
+          <Reveal delay={0.1}><LatestPost /></Reveal>
+          <Reveal delay={0.1} direction="up"><Partners /></Reveal>
+          <Reveal delay={0.1}><CallToAction /></Reveal>
+        </main>
+        <Footer />
+      </div>
+    </PageTransition>
+  )
+}
