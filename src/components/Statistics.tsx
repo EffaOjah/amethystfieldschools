@@ -16,20 +16,20 @@ export default function Statistics() {
 
           <div className="w-1/2 md:w-auto px-6 group cursor-default">
             <h3 className="text-4xl md:text-5xl lg:text-6xl font-black text-primary mb-2 transition-transform group-hover:scale-110 duration-300">
-              60<span className="text-2xl md:text-3xl align-top text-accent">+</span>
+              100<span className="text-2xl md:text-3xl align-top text-accent">%</span>
             </h3>
             <p className="text-secondary text-xs md:text-sm font-black tracking-[0.2em] uppercase">
-              Acres of Land
+              Pass Rate
             </p>
             <div className="w-8 h-1 bg-accent mx-auto mt-3 opacity-0 group-hover:opacity-100 transition-opacity"></div>
           </div>
 
           <div className="w-1/2 md:w-auto px-6 group cursor-default">
             <h3 className="text-4xl md:text-5xl lg:text-6xl font-black text-primary mb-2 transition-transform group-hover:scale-110 duration-300">
-              5<span className="text-2xl md:text-3xl align-top text-accent">+</span>
+              50<span className="text-2xl md:text-3xl align-top text-accent">+</span>
             </h3>
             <p className="text-secondary text-xs md:text-sm font-black tracking-[0.2em] uppercase">
-              School Buses
+              Expert Staff
             </p>
             <div className="w-8 h-1 bg-accent mx-auto mt-3 opacity-0 group-hover:opacity-100 transition-opacity"></div>
           </div>
@@ -46,10 +46,10 @@ export default function Statistics() {
 
           <div className="w-1/2 md:w-auto px-6 mx-auto md:mx-0 group cursor-default">
             <h3 className="text-4xl md:text-5xl lg:text-6xl font-black text-primary mb-2 transition-transform group-hover:scale-110 duration-300">
-              5<span className="text-2xl md:text-3xl align-top text-accent">+</span>
+              15<span className="text-2xl md:text-3xl align-top text-accent">+</span>
             </h3>
             <p className="text-secondary text-xs md:text-sm font-black tracking-[0.2em] uppercase">
-              Programmes
+              Student Clubs
             </p>
             <div className="w-8 h-1 bg-accent mx-auto mt-3 opacity-0 group-hover:opacity-100 transition-opacity"></div>
           </div>

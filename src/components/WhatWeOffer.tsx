@@ -10,39 +10,39 @@ export default function WhatWeOffer() {
           {/* Card 1 */}
           <div className="bg-zinc-50 p-8 md:p-10 rounded-sm text-center shadow-sm hover:shadow-md transition-shadow group">
             <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-primary group-hover:text-white transition-all">
-              <span className="material-symbols-outlined text-primary text-3xl group-hover:text-white">school</span>
+              <span className="material-symbols-outlined text-primary text-3xl group-hover:text-white">menu_book</span>
             </div>
             <h3 className="text-sm font-bold tracking-widest uppercase mb-4 text-primary">
-              Academic Activities
+              Exceptional Academics
             </h3>
             <p className="text-sm text-slate-600 leading-relaxed">
-              AmethystField Schools comprises Junior and Senior secondary levels focused on fostering virtue, leadership, and academic excellence.
+              A rigorous curriculum designed to challenge our students, directly contributing to our consistent record of top-tier exam performance.
             </p>
           </div>
 
           {/* Card 2 */}
           <div className="bg-zinc-50 p-8 md:p-10 rounded-sm text-center shadow-sm hover:shadow-md transition-shadow group">
             <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-primary group-hover:text-white transition-all">
-              <span className="material-symbols-outlined text-primary text-3xl group-hover:text-white">sports_volleyball</span>
+              <span className="material-symbols-outlined text-primary text-3xl group-hover:text-white">domain</span>
             </div>
             <h3 className="text-sm font-bold tracking-widest uppercase mb-4 text-primary">
-              School Life
+              Modern Facilities
             </h3>
             <p className="text-sm text-slate-600 leading-relaxed">
-              Our students are involved in a wide range of extra-curricular activities without compromising their expected academic performance.
+              Our campus features fully-equipped laboratories, a comprehensive library, and comfortable learning spaces that inspire creativity.
             </p>
           </div>
 
           {/* Card 3 */}
           <div className="bg-zinc-50 p-8 md:p-10 rounded-sm text-center shadow-sm hover:shadow-md transition-shadow group">
             <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-primary group-hover:text-white transition-all">
-              <span className="material-symbols-outlined text-primary text-3xl group-hover:text-white">groups</span>
+              <span className="material-symbols-outlined text-primary text-3xl group-hover:text-white">psychology</span>
             </div>
             <h3 className="text-sm font-bold tracking-widest uppercase mb-4 text-primary">
-              Leadership Training
+              Holistic Development
             </h3>
             <p className="text-sm text-slate-600 leading-relaxed">
-              We provide an outstanding leadership training package: leadership development as exactly what defines our students.
+              Beyond academics, we focus on identifying and nurturing each child's unique talents through robust arts and extracurricular programs.
             </p>
           </div>
         </div>

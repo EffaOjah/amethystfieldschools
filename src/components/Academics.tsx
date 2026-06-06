@@ -17,8 +17,12 @@ export default function Academics() {
         <TopNav />
         <main>
           <Reveal delay={0.1}>
-            <div className="relative pt-32 pb-16 md:pt-48 md:pb-24 bg-primary text-center text-white px-4">
-              <div className="absolute inset-0 opacity-10 bg-[url('https://images.unsplash.com/photo-1523050338392-06ba54421b71?q=80&w=2000&auto=format&fit=crop')] bg-cover bg-center"></div>
+            <div className="relative pt-32 pb-16 md:pt-48 md:pb-24 text-center text-white px-4 overflow-hidden">
+              {/* Background Image (Bottom Layer) */}
+              <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=2000&auto=format&fit=crop')] bg-cover bg-center"></div>
+              {/* Background Color Overlay (Top Layer) */}
+              <div className="absolute inset-0 bg-primary/80"></div>
+
               <div className="relative z-10 max-w-4xl mx-auto">
                 <h2 className="text-sm font-bold tracking-[0.2em] text-accent uppercase mb-4">
                   Excellence in Learning
@@ -35,14 +39,14 @@ export default function Academics() {
 
           <section id="academic-philosophy" className="py-20 md:py-28 px-4 md:px-8">
             <div className="max-w-7xl mx-auto">
-              
+
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-24">
                 <Reveal delay={0.2} direction="left">
                   <div className="space-y-6">
                     <h3 className="text-2xl md:text-3xl font-bold text-primary uppercase tracking-tight">The "Modelling Excellence" Philosophy</h3>
                     <p className="text-slate-600 leading-relaxed text-lg">
-                      At AmethystField Schools, we believe that true education goes beyond textbooks. 
-                      Our curriculum is designed to challenge the intellect while nurturing the character. 
+                      At AmethystField Schools, we believe that true education goes beyond textbooks.
+                      Our curriculum is designed to challenge the intellect while nurturing the character.
                       Since 2006, we have maintained a standard where academic rigor meets moral virtue.
                     </p>
                     <div className="flex gap-4 items-center p-6 bg-purple-50 border-l-4 border-accent">
@@ -105,14 +109,14 @@ export default function Academics() {
                     <div className="flex flex-wrap gap-4">
                       <div className="bg-white/10 px-4 py-2 rounded-full text-sm font-medium border border-white/20">ICT Center</div>
                       <div className="bg-white/10 px-4 py-2 rounded-full text-sm font-medium border border-white/20">Physics Lab</div>
-                      <div className="bg-white/10 px-4 py-2 rounded-full text-sm font-medium border border-white/20">Art Studio</div>
+                      <div className="bg-white/10 px-4 py-2 rounded-full text-sm font-medium border border-white/20">Chemistry Lab</div>
                     </div>
                   </div>
-                  <div className="relative z-10 md:w-1/3 text-center md:text-right">
-                    <button className="bg-accent text-primary px-10 py-4 font-black uppercase tracking-widest hover:bg-white transition-all shadow-xl hover:-translate-y-1">
-                      Explore Campus
-                    </button>
-                  </div>
+                  {/* <div className="relative z-10 md:w-1/3 text-center md:text-right">
+                      <button className="bg-accent text-primary px-10 py-4 font-black uppercase tracking-widest hover:bg-white transition-all shadow-xl hover:-translate-y-1">
+                        Explore Campus
+                      </button>
+                    </div> */}
                   <div className="absolute -right-20 -top-20 w-96 h-96 bg-accent/10 rounded-full blur-3xl"></div>
                   <div className="absolute -left-10 -bottom-10 w-64 h-64 bg-white/5 rounded-full blur-2xl"></div>
                 </div>
