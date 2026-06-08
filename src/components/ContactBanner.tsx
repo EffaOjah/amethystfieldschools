@@ -19,7 +19,7 @@ export default function ContactBanner() {
             <span className="material-symbols-outlined text-accent mb-4 text-3xl">phone_in_talk</span>
             <h3 className="text-white font-bold text-lg mb-2">Phone Number</h3>
             <p className="text-slate-300 text-sm">
-              +234 708 737 0719
+              +234 816 400 4644 <br /> +234 912 391 1246
             </p>
           </div>
 
@@ -28,7 +28,7 @@ export default function ContactBanner() {
             <span className="material-symbols-outlined text-accent mb-4 text-3xl">mail</span>
             <h3 className="text-white font-bold text-lg mb-2">Email Address</h3>
             <p className="text-slate-300 text-sm">
-              info@amethystfield.ng<br />amethystfield@yahoo.com
+              amethystfieldschools20@gmail.com<br />amethystfieldschools@fb.com
             </p>
           </div>
 

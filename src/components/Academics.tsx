@@ -2,6 +2,7 @@ import TopNav from './TopNav';
 import Footer from './Footer';
 import PageTransition from './PageTransition';
 import Reveal from './Reveal';
+import SEO from './SEO';
 
 export default function Academics() {
   const departments = [
@@ -13,6 +14,11 @@ export default function Academics() {
 
   return (
     <PageTransition>
+      <SEO 
+        title="Academics & Curriculum | Amethyst Field Schools"
+        description="Discover the academic programs, foundations, and departments at Amethyst Field Schools. We offer structured curriculums for both Junior and Senior Secondary students."
+        canonical="https://amethystfieldschools.com/academics"
+      />
       <div className="bg-white min-h-screen">
         <TopNav />
         <main>
@@ -47,7 +53,7 @@ export default function Academics() {
                     <p className="text-slate-600 leading-relaxed text-lg">
                       At AmethystField Schools, we believe that true education goes beyond textbooks.
                       Our curriculum is designed to challenge the intellect while nurturing the character.
-                      Since 2006, we have maintained a standard where academic rigor meets moral virtue.
+                      Since 2020, we have maintained a standard where academic rigor meets moral virtue.
                     </p>
                     <div className="flex gap-4 items-center p-6 bg-purple-50 border-l-4 border-accent">
                       <span className="material-symbols-outlined text-primary text-4xl">emoji_events</span>

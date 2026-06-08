@@ -3,6 +3,7 @@ import TopNav from '../components/TopNav';
 import Footer from '../components/Footer';
 import PageTransition from '../components/PageTransition';
 import Reveal from '../components/Reveal';
+import SEO from '../components/SEO';
 
 export default function Apply() {
   const [submitted, setSubmitted] = useState(false);
@@ -16,6 +17,11 @@ export default function Apply() {
   if (submitted) {
     return (
       <PageTransition>
+        <SEO 
+          title="Application Submitted | Amethyst Field Schools"
+          description="Thank you for applying to Amethyst Field Schools. Our admissions team will review your application soon."
+          canonical="https://amethystfieldschools.com/apply"
+        />
         <div className="bg-white min-h-screen">
           <TopNav />
           <main className="pt-48 pb-24 px-4 text-center">
@@ -28,7 +34,7 @@ export default function Apply() {
                 <p className="text-lg text-slate-600 leading-relaxed">
                   Thank you for applying to AmethystField Schools. Our admissions team will review your application and contact you within 3-5 working days.
                 </p>
-                <button 
+                <button
                   onClick={() => setSubmitted(false)}
                   className="mt-8 text-primary font-bold uppercase tracking-widest hover:text-accent transition-colors"
                 >
@@ -45,6 +51,11 @@ export default function Apply() {
 
   return (
     <PageTransition>
+      <SEO 
+        title="Admission Application Form | Amethyst Field Schools"
+        description="Apply for admission at Amethyst Field Schools. Fill out the application form for your child to join our community of academic and moral excellence."
+        canonical="https://amethystfieldschools.com/apply"
+      />
       <div className="bg-white min-h-screen font-body">
         <TopNav />
         <main>
@@ -67,9 +78,9 @@ export default function Apply() {
 
           <section className="py-20 md:py-28 px-4 md:px-8">
             <div className="max-w-4xl mx-auto">
-              
+
               <form onSubmit={handleSubmit} className="space-y-16">
-                
+
                 <Reveal delay={0.2} direction="up">
                   <div className="space-y-8">
                     <div className="flex items-center gap-4 border-b border-zinc-100 pb-4">
@@ -145,10 +156,10 @@ export default function Apply() {
                     <div className="flex items-start gap-4 mb-10 p-6 bg-purple-50 border-l-4 border-accent">
                       <span className="material-symbols-outlined text-primary">info</span>
                       <p className="text-sm text-primary/80 leading-relaxed italic">
-                        By submitting this application, you agree to the processing of the provided information for admission purposes. A fee of ₦10,000 will be payable upon successful scheduling of the entrance examination.
+                        By submitting this application, you agree to the processing of the provided information for admission purposes.
                       </p>
                     </div>
-                    <button 
+                    <button
                       type="submit"
                       className="w-full bg-primary text-on-primary py-6 font-black uppercase tracking-[0.2em] shadow-2xl hover:bg-secondary hover:text-white transition-all hover:-translate-y-1 flex items-center justify-center gap-4"
                     >

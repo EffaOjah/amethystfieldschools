@@ -2,6 +2,7 @@ import TopNav from '../components/TopNav';
 import Footer from '../components/Footer';
 import PageTransition from '../components/PageTransition';
 import Reveal from '../components/Reveal';
+import SEO from '../components/SEO';
 
 export default function Information() {
   const termDates = [
@@ -20,6 +21,11 @@ export default function Information() {
 
   return (
     <PageTransition>
+      <SEO 
+        title="School Information & Calendar | Amethyst Field Schools"
+        description="Access key information about Amethyst Field Schools. View the academic planner, admission procedures, facilities, and school policy guidelines."
+        canonical="https://amethystfieldschools.com/information"
+      />
       <div className="bg-white min-h-screen">
         <TopNav />
         <main>

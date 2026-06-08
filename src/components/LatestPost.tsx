@@ -3,7 +3,7 @@ export default function LatestPost() {
     <section className="py-16 md:py-24 bg-secondary px-4 md:px-8 text-white relative overflow-hidden">
       <div className="absolute top-0 right-0 w-96 h-96 bg-primary/20 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2"></div>
       <div className="absolute bottom-0 left-0 w-64 h-64 bg-accent/10 rounded-full blur-[80px] translate-y-1/2 -translate-x-1/2"></div>
-      
+
       <div className="max-w-5xl mx-auto relative z-10">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-5xl font-sans font-extrabold mb-4 uppercase tracking-widest text-accent drop-shadow-sm">
@@ -13,36 +13,36 @@ export default function LatestPost() {
         </div>
 
         <div className="bg-white/5 border border-white/10 rounded-3xl overflow-hidden shadow-2xl backdrop-blur-sm flex flex-col md:flex-row group cursor-pointer">
-          
+
           {/* Image Section */}
           <div className="md:w-1/2 h-[300px] md:h-[400px] relative overflow-hidden">
-            <img 
-              src="/amf-about.jpeg" 
-              alt="Next Academic Session" 
+            <img
+              src="/amf-about.png"
+              alt="Next Academic Session"
               className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
             />
             <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-secondary/90 via-secondary/20 to-transparent"></div>
-            
+
             <div className="absolute top-6 left-6 bg-white rounded-full p-2 shadow-lg">
               <img src="/amf-logo.jpg" alt="AmethystField Logo" className="w-10 h-10 object-contain rounded-full" />
             </div>
           </div>
-          
+
           {/* Content Section */}
           <div className="md:w-1/2 p-8 md:p-12 flex flex-col justify-center relative">
             <div className="flex items-center gap-3 mb-4">
               <span className="bg-accent text-primary text-xs font-black px-3 py-1 uppercase tracking-widest rounded-full">Announcement</span>
-              <span className="text-purple-200/70 text-sm font-medium">August 15, 2026</span>
+              <span className="text-purple-200/70 text-sm font-medium">June 8th, 2026</span>
             </div>
-            
+
             <h3 className="text-2xl md:text-3xl font-bold mb-4 group-hover:text-accent transition-colors uppercase tracking-tight leading-snug text-white">
               Preparing for the 2026/2027 Academic Session
             </h3>
-            
+
             <p className="text-purple-100/80 text-sm md:text-base mb-8 leading-relaxed">
               We are incredibly excited to welcome our students back for another transformative year at AmethystField Schools! The upcoming session promises upgraded facilities, new extracurricular clubs, and a continued commitment to modelling excellence in every student.
             </p>
-            
+
             <div className="mt-auto">
               <button className="bg-white hover:bg-accent text-primary px-8 py-3 rounded-full font-black text-sm transition-all uppercase tracking-widest shadow-lg hover:-translate-y-1 flex items-center gap-2 group-hover:text-primary">
                 Read Full Update

@@ -11,10 +11,16 @@ import CallToAction from '../components/CallToAction'
 import Footer from '../components/Footer'
 import PageTransition from '../components/PageTransition'
 import Reveal from '../components/Reveal'
+import SEO from '../components/SEO'
 
 export default function Home() {
   return (
     <PageTransition>
+      <SEO 
+        title="Amethyst Field Schools | modeling excellence | Calabar, Nigeria"
+        description="Welcome to Amethyst Field Schools in Calabar, Nigeria. Established in September 2020, we offer exceptional care and foster academic excellence, emotional, and social balance."
+        canonical="https://amethystfieldschools.com/"
+      />
       <div className="bg-white text-on-surface font-body min-h-screen overflow-x-hidden">
         <TopNav />
         <main>
