@@ -12,6 +12,7 @@ import Footer from '../components/Footer'
 import PageTransition from '../components/PageTransition'
 import Reveal from '../components/Reveal'
 import SEO from '../components/SEO'
+import MediaGallery from '../components/MediaGallery'
 
 export default function Home() {
   return (
@@ -29,7 +30,8 @@ export default function Home() {
           <Reveal delay={0.1}><Statistics /></Reveal>
           <Reveal delay={0.1} direction="left"><AboutUs /></Reveal>
           <Reveal delay={0.1}><Extracurriculars /></Reveal>
-          <Reveal delay={0.1} direction="right"><Testimonials /></Reveal>
+          <Reveal delay={0.1} direction="right"><MediaGallery /></Reveal>
+          <Reveal delay={0.1} direction="left"><Testimonials /></Reveal>
           <Reveal delay={0.1}><LatestPost /></Reveal>
           <Reveal delay={0.1} direction="up"><ContactBanner /></Reveal>
           <Reveal delay={0.1}><CallToAction /></Reveal>

@@ -6,6 +6,7 @@ import Academics from './components/Academics';
 import Contact from './pages/Contact';
 import Information from './pages/Information';
 import Apply from './pages/Apply';
+import MediaPage from './pages/MediaPage';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/information" element={<Information />} />
         <Route path="/apply" element={<Apply />} />
+        <Route path="/media" element={<MediaPage />} />
       </Routes>
     </Router>
   )
