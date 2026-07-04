@@ -1,9 +1,30 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { mediaItems } from '../data/mediaData';
+import api from '../api';
+
+interface Media {
+  id: number;
+  title: string | null;
+  url: string;
+}
 
 export default function MediaGallery() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [mediaItems, setMediaItems] = useState<Media[]>([]);
+
+  useEffect(() => {
+    const fetchMedia = async () => {
+      try {
+        const { data } = await api.get('/media');
+        // Filter out blog covers from the public gallery
+        const filteredMedia = data.filter((item: Media) => !item.title?.startsWith('Blog Cover'));
+        setMediaItems(filteredMedia);
+      } catch (error) {
+        console.error('Failed to fetch media', error);
+      }
+    };
+    fetchMedia();
+  }, []);
   
   // Show only first 3 items on the home page
   const displayedItems = mediaItems.slice(0, 3);
@@ -28,26 +49,28 @@ export default function MediaGallery() {
 
         {/* Gallery Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {displayedItems.map((item) => (
-            <div key={item.id} className="bg-zinc-50 rounded-2xl overflow-hidden shadow-sm border border-zinc-100 hover:shadow-xl transition-all duration-300 group">
-              {item.type === 'image' ? (
+          {displayedItems.map((item) => {
+            const isVideo = item.url.match(/\.(mp4|webm|ogg)$/i) || item.url.includes('video/upload');
+            return (
+            <div key={item.id} className="bg-zinc-50 rounded-2xl overflow-hidden shadow-sm border border-zinc-100 hover:shadow-xl transition-all duration-300 group flex flex-col">
+              {!isVideo ? (
                 <div 
-                  className="aspect-[4/3] bg-zinc-200 relative overflow-hidden cursor-pointer"
-                  onClick={() => setSelectedImage(item.src)}
+                  className="aspect-[4/3] bg-zinc-200 relative overflow-hidden flex-shrink-0 cursor-pointer"
+                  onClick={() => setSelectedImage(item.url)}
                 >
                   <div className="absolute inset-0 bg-black/20 md:bg-primary/20 opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 pointer-events-none flex items-center justify-center">
                     <span className="material-symbols-outlined text-white text-4xl md:opacity-0 group-hover:opacity-100 transition-opacity duration-300 md:delay-100 drop-shadow-md p-2 rounded-full bg-black/30 md:bg-transparent backdrop-blur-sm md:backdrop-blur-none">zoom_in</span>
                   </div>
                   <img
-                    src={item.src}
-                    alt={item.caption || 'Media image'}
+                    src={item.url}
+                    alt={item.title || 'Media image'}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                   />
                 </div>
               ) : (
-                <div className="aspect-[4/3] bg-black flex items-center justify-center relative overflow-hidden">
+                <div className="aspect-[4/3] bg-black flex items-center justify-center relative overflow-hidden flex-shrink-0">
                   <video
-                    src={item.src}
+                    src={item.url}
                     controls
                     className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-300"
                   >
@@ -57,14 +80,19 @@ export default function MediaGallery() {
               )}
 
               {/* Caption */}
-              {item.caption && (
-                <div className="p-5 bg-white border-t border-zinc-100 text-center relative">
+              {item.title && (
+                <div className="p-5 bg-white border-t border-zinc-100 text-center relative flex-grow flex items-center justify-center">
                   <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 bg-white border border-zinc-100 rotate-45 hidden group-hover:block transition-all"></div>
-                  <p className="text-sm font-bold text-slate-700 relative z-10">{item.caption}</p>
+                  <p className="text-sm font-bold text-slate-700 relative z-10">{item.title}</p>
                 </div>
               )}
             </div>
-          ))}
+          )})}
+          {displayedItems.length === 0 && (
+            <div className="col-span-full text-center py-10 text-slate-500">
+              No media available yet.
+            </div>
+          )}
         </div>
 
         {/* See More Button */}

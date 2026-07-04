@@ -37,7 +37,8 @@ export default function TopNav() {
           <Link className="hover:text-accent transition-colors" to="/academics">Academics</Link>
           <a className="hover:text-accent transition-colors" href="/apply">Admissions</a>
           <Link className="hover:text-accent transition-colors" to="/information">Information</Link>
-          {/* <a className="hover:text-accent transition-colors" href="/#portal">School Portal</a> */}
+          <Link className="hover:text-accent transition-colors" to="/media">Media</Link>
+          <Link className="hover:text-accent transition-colors" to="/blogs">Blog</Link>
         </div>
 
         <div className="hidden md:flex items-center gap-4">
@@ -67,6 +68,8 @@ export default function TopNav() {
           <Link className="text-white/90 hover:text-accent text-2xl font-bold uppercase tracking-wider" to="/academics" onClick={() => setIsOpen(false)}>Academics</Link>
           <a className="text-white/90 hover:text-accent text-2xl font-bold uppercase tracking-wider" href="/apply" onClick={() => setIsOpen(false)}>Admissions</a>
           <Link className="text-white/90 hover:text-accent text-2xl font-bold uppercase tracking-wider" to="/information" onClick={() => setIsOpen(false)}>Information</Link>
+          <Link className="text-white/90 hover:text-accent text-2xl font-bold uppercase tracking-wider" to="/media" onClick={() => setIsOpen(false)}>Media</Link>
+          <Link className="text-white/90 hover:text-accent text-2xl font-bold uppercase tracking-wider" to="/blogs" onClick={() => setIsOpen(false)}>Blog</Link>
           <Link to="/contact" onClick={() => setIsOpen(false)} className="bg-accent text-primary px-10 py-4 rounded-lg font-bold text-xl mt-4 uppercase tracking-wider flex items-center gap-2 shadow-xl">
             <span className="material-symbols-outlined">campaign</span>
             Contact
