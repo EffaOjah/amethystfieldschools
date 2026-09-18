@@ -1,15 +1,15 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import TopNav from '../components/TopNav';
+import Footer from '../components/Footer';
 import SEO from '../components/SEO';
 import PageTransition from '../components/PageTransition';
+import Reveal from '../components/Reveal';
 import api from '../api';
 import { localSchoolMedia, type MediaItem } from '../data/mediaData';
 
 export default function MediaPage() {
   const [allItems, setAllItems] = useState<MediaItem[]>(localSchoolMedia);
-  const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedModalItem, setSelectedModalItem] = useState<MediaItem | null>(null);
-  const thumbnailContainerRef = useRef<HTMLDivElement>(null);
 
   // Fetch dynamic media from API if available
   useEffect(() => {
@@ -52,158 +52,97 @@ export default function MediaPage() {
     fetchApiMedia();
   }, []);
 
-  const activeItem = allItems[currentIndex] || localSchoolMedia[0];
-
-  const handleNext = () => {
-    setCurrentIndex((prev) => (prev + 1) % allItems.length);
-  };
-
-  const handlePrev = () => {
-    setCurrentIndex((prev) => (prev - 1 + allItems.length) % allItems.length);
-  };
-
-  // Scroll active thumbnail into view
-  useEffect(() => {
-    if (thumbnailContainerRef.current) {
-      const activeThumb = thumbnailContainerRef.current.children[currentIndex] as HTMLElement;
-      if (activeThumb) {
-        activeThumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-      }
-    }
-  }, [currentIndex]);
-
   return (
     <PageTransition>
       <SEO 
         title="Media Gallery | AmethystField Schools"
         description="Explore pictures and video highlights of AmethystField Schools."
       />
-      <div className="relative w-full h-screen overflow-hidden bg-black text-white font-sans select-none">
-        
-        {/* Navigation Bar overlaying top of image */}
+      <div className="bg-[#f8fafc] text-slate-900 font-sans min-h-screen flex flex-col">
         <TopNav />
 
-        {/* MAIN HERO FULLSCREEN STAGE */}
-        <div className="relative w-full h-full overflow-hidden bg-black flex flex-col justify-center items-center">
+        <main className="flex-grow pb-24">
           
-          {/* Subtle Ambient Blurred Image Background */}
-          {activeItem.type === 'image' && (
-            <img
-              key={`bg-${activeItem.src}`}
-              src={activeItem.src}
-              alt=""
-              className="absolute inset-0 w-full h-full object-cover blur-2xl opacity-35 scale-110 pointer-events-none"
-            />
-          )}
+          {/* Header Banner */}
+          <Reveal delay={0.1}>
+            <div className="relative pt-28 pb-14 md:pt-36 md:pb-18 bg-gradient-to-r from-[#662D91] via-[#522377] to-[#3b1557] text-center text-white px-4 mb-10 overflow-hidden border-b border-purple-900 shadow-md">
+              <div className="absolute inset-0 opacity-20 bg-[url('https://images.unsplash.com/photo-1544377193-33dcf4d68fb5?q=80&w=2000&auto=format&fit=crop')] bg-cover bg-center pointer-events-none"></div>
+              <div className="relative z-10 max-w-4xl mx-auto space-y-3">
+                <span className="text-xs font-bold tracking-[0.2em] text-amber-300 uppercase bg-white/10 backdrop-blur-xs px-4 py-1.5 rounded-full border border-white/20 inline-block mb-1">
+                  MEDIA GALLERY
+                </span>
+                <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold leading-tight uppercase tracking-tight text-white font-sans">
+                  CAMPUS HIGHLIGHTS
+                </h1>
+                <p className="text-sm md:text-base text-purple-100/90 font-serif italic max-w-2xl mx-auto">
+                  "Modelling Excellence" — Explore pictures and video highlights of our school community.
+                </p>
+              </div>
+            </div>
+          </Reveal>
 
-          {/* Main Media Image / Video using object-contain to display 100% of the photo/video without cropping */}
-          {activeItem.type === 'video' ? (
-            <video
-              key={activeItem.src}
-              src={activeItem.src}
-              controls
-              autoPlay
-              muted
-              loop
-              className="relative z-10 w-full h-full object-contain"
-            />
-          ) : (
-            <img
-              key={activeItem.src}
-              src={activeItem.src}
-              alt={activeItem.title}
-              className="relative z-10 w-full h-full object-contain cursor-pointer transition-transform duration-700 hover:scale-[1.01]"
-              onClick={() => setSelectedModalItem(activeItem)}
-            />
-          )}
-
-          {/* Natural Atmospheric Dark Tint Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-black/30 pointer-events-none z-15" />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-transparent pointer-events-none z-15" />
-
-          {/* OVERLAY TEXT (BOTTOM LEFT) - BEBAS NEUE TALL CONDENSED TYPOGRAPHY */}
-          <div className="absolute bottom-24 sm:bottom-28 md:bottom-32 left-6 sm:left-12 md:left-16 lg:left-20 z-20 pointer-events-auto flex flex-col items-start max-w-5xl">
-            <h1 className="font-['Bebas_Neue',sans-serif] text-5xl sm:text-7xl md:text-8xl lg:text-[9rem] xl:text-[10rem] uppercase text-white leading-[0.82] tracking-normal drop-shadow-2xl flex flex-col">
-              <span>{activeItem.title1}</span>
-              <span>{activeItem.title2}</span>
-            </h1>
-
-            {/* SEE MORE - Rust / Coral Red Text */}
-            <button
-              onClick={() => setSelectedModalItem(activeItem)}
-              className="mt-2 sm:mt-3 font-['Bebas_Neue',sans-serif] text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-[#DF5744] hover:text-[#f26552] uppercase tracking-wider transition-colors cursor-pointer leading-none"
-            >
-              SEE MORE
-            </button>
-          </div>
-
-          {/* CIRCULAR NAVIGATION BUTTONS (BOTTOM RIGHT ABOVE THUMBNAILS) */}
-          <div className="absolute bottom-24 sm:bottom-28 md:bottom-32 right-6 sm:right-12 md:right-16 z-20 flex items-center gap-3 sm:gap-4 pointer-events-auto">
-            <button
-              onClick={handlePrev}
-              className="w-12 h-12 sm:w-14 sm:h-14 rounded-full border border-white/60 hover:border-white text-white bg-black/30 hover:bg-white/20 backdrop-blur-xs flex items-center justify-center transition-all hover:scale-105 cursor-pointer shadow-lg"
-              aria-label="Previous"
-            >
-              <span className="material-symbols-outlined text-2xl sm:text-3xl">west</span>
-            </button>
-            <button
-              onClick={handleNext}
-              className="w-12 h-12 sm:w-14 sm:h-14 rounded-full border border-white/60 hover:border-white text-white bg-black/30 hover:bg-white/20 backdrop-blur-xs flex items-center justify-center transition-all hover:scale-105 cursor-pointer shadow-lg"
-              aria-label="Next"
-            >
-              <span className="material-symbols-outlined text-2xl sm:text-3xl">east</span>
-            </button>
-          </div>
-
-          {/* FLUSH BOTTOM THUMBNAIL STRIP */}
-          <div className="absolute bottom-0 inset-x-0 h-20 sm:h-24 md:h-28 z-30 bg-black border-t border-zinc-800 overflow-hidden">
-            <div
-              ref={thumbnailContainerRef}
-              className="flex items-center h-full overflow-x-auto scrollbar-none"
-            >
-              {allItems.map((item, idx) => {
-                const isActive = idx === currentIndex;
-                return (
-                  <button
-                    key={item.id}
-                    onClick={() => setCurrentIndex(idx)}
-                    className={`relative h-full aspect-[16/10] shrink-0 border-r border-zinc-900 transition-all duration-300 cursor-pointer ${
-                      isActive
-                        ? 'border-t-2 border-[#DF5744] grayscale-0 brightness-100 z-10'
-                        : 'border-t-2 border-transparent grayscale brightness-50 contrast-125 hover:grayscale-0 hover:brightness-100'
-                    }`}
+          {/* Main 3-Column Media Cards Grid */}
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+              {allItems.map((item, idx) => (
+                <Reveal key={item.id} delay={0.1 * (idx % 3)}>
+                  <div 
+                    className="bg-white rounded-2xl p-3 border border-slate-200/80 shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col h-full group overflow-hidden cursor-pointer" 
+                    onClick={() => setSelectedModalItem(item)}
                   >
-                    {item.type === 'video' ? (
-                      <div className="w-full h-full bg-zinc-950 relative flex items-center justify-center">
-                        <video 
-                          src={item.src} 
-                          className="w-full h-full object-cover opacity-80" 
-                        />
-                        <div className="absolute inset-0 flex items-center justify-center bg-black/40">
-                          <span className="material-symbols-outlined text-white text-xl sm:text-2xl">play_circle</span>
-                        </div>
+                    
+                    {/* Top Card Banner: Image/Video */}
+                    <div className="w-full h-48 sm:h-56 rounded-xl overflow-hidden relative shrink-0">
+                      {item.type === 'video' ? (
+                        <>
+                          <video src={item.src} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                          <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
+                            <span className="material-symbols-outlined text-white text-5xl opacity-80 group-hover:opacity-100 transition-opacity">play_circle</span>
+                          </div>
+                        </>
+                      ) : (
+                        <img src={item.src} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                      )}
+                      
+                      {/* Category Badge */}
+                      <div className="absolute top-3 left-3">
+                        <span className="inline-block text-[10px] font-bold text-white bg-slate-900/60 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/20 uppercase tracking-wider">
+                          {item.category}
+                        </span>
                       </div>
-                    ) : (
-                      <img
-                        src={item.src}
-                        alt={item.title}
-                        className="w-full h-full object-cover"
-                      />
-                    )}
-                  </button>
-                );
-              })}
+                    </div>
+
+                    {/* Card Content Body */}
+                    <div className="p-4 sm:p-5 flex-grow flex flex-col justify-between">
+                      <div>
+                        <h3 className="text-base sm:text-lg font-bold text-slate-950 leading-snug tracking-tight mb-2 line-clamp-2 group-hover:text-[#662D91] transition-colors">
+                          {item.title}
+                        </h3>
+                        <p className="text-xs text-slate-600 font-normal leading-relaxed line-clamp-2 mb-4">
+                          {item.caption}
+                        </p>
+                      </div>
+                      <button
+                        className="inline-flex items-center gap-1.5 text-xs font-bold text-[#662D91] hover:text-[#522377] transition-colors self-start cursor-pointer group-hover:translate-x-1 duration-200"
+                      >
+                        <span>View Media</span>
+                        <span className="material-symbols-outlined text-sm">open_in_full</span>
+                      </button>
+                    </div>
+                  </div>
+                </Reveal>
+              ))}
             </div>
           </div>
+        </main>
 
-        </div>
-
+        <Footer />
       </div>
 
       {/* FULLSCREEN LIGHTBOX MODAL */}
       {selectedModalItem && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-xl p-4 sm:p-8"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/90 backdrop-blur-sm p-4 md:p-8"
           onClick={() => setSelectedModalItem(null)}
         >
           <div className="relative max-w-6xl w-full max-h-[92vh] flex flex-col items-center justify-center">
@@ -219,23 +158,23 @@ export default function MediaPage() {
                 src={selectedModalItem.src}
                 controls
                 autoPlay
-                className="max-w-full max-h-[75vh] object-contain rounded-lg shadow-2xl border border-white/20"
+                className="max-w-full max-h-[75vh] object-contain rounded-lg shadow-2xl border border-white/10"
                 onClick={(e) => e.stopPropagation()}
               />
             ) : (
               <img
                 src={selectedModalItem.src}
                 alt={selectedModalItem.title}
-                className="max-w-full max-h-[75vh] object-contain rounded-lg shadow-2xl border border-white/20"
+                className="max-w-full max-h-[75vh] object-contain rounded-lg shadow-2xl border border-white/10"
                 onClick={(e) => e.stopPropagation()}
               />
             )}
 
             <div
-              className="mt-4 bg-zinc-900 border border-white/15 p-4 sm:p-6 rounded-lg max-w-2xl text-center"
+              className="mt-4 bg-slate-900 border border-slate-700/50 p-4 sm:p-6 rounded-xl max-w-2xl text-center shadow-lg"
               onClick={(e) => e.stopPropagation()}
             >
-              <h3 className="font-['Bebas_Neue',sans-serif] text-3xl sm:text-4xl text-white tracking-wide mb-1">
+              <h3 className="font-extrabold text-xl sm:text-2xl text-white tracking-tight mb-2">
                 {selectedModalItem.title}
               </h3>
               <p className="text-slate-300 text-sm leading-relaxed">
