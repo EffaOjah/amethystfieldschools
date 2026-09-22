@@ -15,63 +15,7 @@ interface Blog {
   created_at: string;
 }
 
-// Preset visual themes matching reference screenshot UI
-const BANNER_THEMES = [
-  {
-    leftBg: "bg-[#ecfccb]", // Lime
-    headline: "Continuous QA",
-    tag: "#DevOps",
-    authorName: "Laura Jenkins",
-    authorRole: "Lead DevOps",
-    authorImg: "/IMG_1939.JPG.jpeg",
-    authorGradient: "bg-gradient-to-tr from-[#9333ea] via-[#c084fc] to-[#e9d5ff]"
-  },
-  {
-    leftBg: "bg-[#f3e8ff]", // Lavender
-    headline: "Zero Defects!",
-    tag: "#Innovation",
-    authorName: "Priya Sharma",
-    authorRole: "Senior DevOps",
-    authorImg: "/IMG_1943.JPG.jpeg",
-    authorGradient: "bg-gradient-to-tr from-[#1e1b4b] via-[#312e81] to-[#6366f1]"
-  },
-  {
-    leftBg: "bg-[#e2e8f0]", // Slate Ice
-    headline: "Scale QA Effortlessly",
-    tag: "#Productivity",
-    authorName: "Mark Thompson",
-    authorRole: "Senior QA Architect",
-    authorImg: "/IMG_1945.JPG.jpeg",
-    authorGradient: "bg-gradient-to-tr from-[#0284c7] via-[#38bdf8] to-[#93c5fd]"
-  },
-  {
-    leftBg: "bg-[#e0f2fe]", // Sky Blue
-    headline: "AI Test Scripts",
-    tag: "#Innovation",
-    authorName: "Maria Gonzales",
-    authorRole: "Automation Strategist",
-    authorImg: "/IMG_1940.JPG.jpeg",
-    authorGradient: "bg-gradient-to-tr from-[#4338ca] via-[#6366f1] to-[#a5b4fc]"
-  },
-  {
-    leftBg: "bg-[#fef3c7]", // Warm Amber
-    headline: "Collaborate Better",
-    tag: "#Teamwork",
-    authorName: "Monica Rivera",
-    authorRole: "QA Lead Engineer",
-    authorImg: "/girl.jpg",
-    authorGradient: "bg-gradient-to-tr from-[#581c87] via-[#7e22ce] to-[#c084fc]"
-  },
-  {
-    leftBg: "bg-[#ccfbf1]", // Mint Teal
-    headline: "QA Solutions",
-    tag: "#Education",
-    authorName: "Michael Lee",
-    authorRole: "Automation Consultant",
-    authorImg: "/school-image.png",
-    authorGradient: "bg-gradient-to-tr from-[#0f766e] via-[#14b8a6] to-[#5eead4]"
-  }
-];
+
 
 // Fallback school blog posts matching reference design
 const DEFAULT_BLOGS: Blog[] = [
@@ -181,46 +125,24 @@ export default function BlogsPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
               {displayBlogs.map((blog, idx) => {
-                const theme = BANNER_THEMES[idx % BANNER_THEMES.length];
                 
                 return (
                   <Reveal key={blog.id} delay={0.1 * (idx % 3)}>
                     <div className="bg-white rounded-2xl p-3 border border-slate-200/80 shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col h-full group">
                       
-                      {/* Top Card Banner: Left colored block + Right author image */}
-                      <div className="w-full h-44 sm:h-48 rounded-xl overflow-hidden flex relative shrink-0">
-                        
-                        {/* Left Half (approx 55%): Pastel Gradient + Headline + Pill Badge */}
-                        <div className={`w-[56%] ${theme.leftBg} p-4 flex flex-col justify-between relative z-10`}>
-                          <h4 className="text-base sm:text-lg font-black text-slate-900 leading-tight tracking-tight">
-                            {theme.headline}
-                          </h4>
-                          
-                          <div className="mt-auto">
-                            <span className="inline-block text-[10px] font-bold text-slate-800 bg-white/60 backdrop-blur-xs px-2.5 py-1 rounded-full border border-slate-400/30 tracking-wide uppercase">
-                              {theme.tag}
-                            </span>
-                          </div>
-                        </div>
-
-                        {/* Right Half (approx 44%): Author/Student Portrait with Gradient Backdrop */}
-                        <div className={`w-[44%] relative overflow-hidden ${theme.authorGradient} flex items-end justify-center`}>
+                      {/* Top Card Banner: Blog Image */}
+                      <div className="w-full h-48 rounded-xl overflow-hidden relative shrink-0 bg-slate-100">
+                        {blog.media_url ? (
                           <img 
-                            src={blog.media_url || theme.authorImg} 
-                            alt={blog.author || theme.authorName} 
-                            className="w-full h-full object-cover object-top filter brightness-[1.02] contrast-[1.05]"
+                            src={blog.media_url} 
+                            alt={blog.title} 
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                           />
-                          {/* Bottom Gradient Overlay with Author Info */}
-                          <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/90 via-slate-950/60 to-transparent p-2.5 pt-6 flex flex-col justify-end">
-                            <span className="text-xs font-bold text-white leading-tight truncate">
-                              {blog.author || theme.authorName}
-                            </span>
-                            <span className="text-[10px] text-slate-300 font-medium leading-tight truncate">
-                              {theme.authorRole}
-                            </span>
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center text-slate-300">
+                            <span className="material-symbols-outlined text-4xl">image</span>
                           </div>
-                        </div>
-
+                        )}
                       </div>
 
                       {/* Card Content Body */}

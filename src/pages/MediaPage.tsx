@@ -5,11 +5,11 @@ import SEO from '../components/SEO';
 import PageTransition from '../components/PageTransition';
 import Reveal from '../components/Reveal';
 import api from '../api';
-import { localSchoolMedia, type MediaItem } from '../data/mediaData';
+import { localSchoolMedia } from '../data/mediaData';
 
 export default function MediaPage() {
-  const [allItems, setAllItems] = useState<MediaItem[]>(localSchoolMedia);
-  const [selectedModalItem, setSelectedModalItem] = useState<MediaItem | null>(null);
+  const [allItems, setAllItems] = useState<any[]>(localSchoolMedia);
+  const [selectedModalItem, setSelectedModalItem] = useState<any | null>(null);
 
   // Fetch dynamic media from API if available
   useEffect(() => {
@@ -17,27 +17,18 @@ export default function MediaPage() {
       try {
         const { data } = await api.get('/media');
         if (Array.isArray(data) && data.length > 0) {
-          const fetchedItems: MediaItem[] = data
+          const fetchedItems = data
             .filter((item: any) => !item.title?.startsWith('Blog Cover'))
             .map((item: any) => {
-              const fullTitle = (item.title || 'AMETHYSTFIELD SCHOOLS').toUpperCase();
-              const words = fullTitle.split(' ');
-              const mid = Math.ceil(words.length / 2);
               return {
                 id: `api-${item.id}`,
                 type: item.url.match(/\.(mp4|webm|ogg)$/i) || item.url.includes('video/upload') ? 'video' : 'image',
                 src: item.url,
-                title1: words.slice(0, mid).join(' ') || 'AMETHYSTFIELD',
-                title2: words.slice(mid).join(' ') || 'SCHOOLS',
-                title: fullTitle,
-                category: 'Campus Life',
-                caption: item.title || 'Excellence and holistic student growth at AmethystField Schools.',
-                ctaText: 'SEE MORE',
-                ctaLink: '/media'
+                caption: item.title || '',
               };
             });
 
-          const combined = [...localSchoolMedia];
+          const combined: any[] = [...localSchoolMedia];
           fetchedItems.forEach(item => {
             if (!combined.some(c => c.src === item.src)) {
               combined.push(item);
@@ -87,12 +78,12 @@ export default function MediaPage() {
               {allItems.map((item, idx) => (
                 <Reveal key={item.id} delay={0.1 * (idx % 3)}>
                   <div 
-                    className="bg-white rounded-2xl p-3 border border-slate-200/80 shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col h-full group overflow-hidden cursor-pointer" 
+                    className="bg-white rounded-2xl overflow-hidden border border-slate-200/80 shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col h-full group cursor-pointer" 
                     onClick={() => setSelectedModalItem(item)}
                   >
                     
                     {/* Top Card Banner: Image/Video */}
-                    <div className="w-full h-48 sm:h-56 rounded-xl overflow-hidden relative shrink-0">
+                    <div className="w-full h-56 sm:h-64 relative shrink-0 overflow-hidden bg-slate-100">
                       {item.type === 'video' ? (
                         <>
                           <video src={item.src} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
@@ -101,34 +92,18 @@ export default function MediaPage() {
                           </div>
                         </>
                       ) : (
-                        <img src={item.src} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                        <img src={item.src} alt={item.caption || 'Media item'} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                       )}
-                      
-                      {/* Category Badge */}
-                      <div className="absolute top-3 left-3">
-                        <span className="inline-block text-[10px] font-bold text-white bg-slate-900/60 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/20 uppercase tracking-wider">
-                          {item.category}
-                        </span>
-                      </div>
                     </div>
 
                     {/* Card Content Body */}
-                    <div className="p-4 sm:p-5 flex-grow flex flex-col justify-between">
-                      <div>
-                        <h3 className="text-base sm:text-lg font-bold text-slate-950 leading-snug tracking-tight mb-2 line-clamp-2 group-hover:text-[#662D91] transition-colors">
-                          {item.title}
-                        </h3>
-                        <p className="text-xs text-slate-600 font-normal leading-relaxed line-clamp-2 mb-4">
+                    {item.caption && (
+                      <div className="p-4 sm:p-5 flex-grow flex items-center justify-center border-t border-slate-100">
+                        <p className="text-sm font-bold text-slate-800 tracking-wide text-center uppercase">
                           {item.caption}
                         </p>
                       </div>
-                      <button
-                        className="inline-flex items-center gap-1.5 text-xs font-bold text-[#662D91] hover:text-[#522377] transition-colors self-start cursor-pointer group-hover:translate-x-1 duration-200"
-                      >
-                        <span>View Media</span>
-                        <span className="material-symbols-outlined text-sm">open_in_full</span>
-                      </button>
-                    </div>
+                    )}
                   </div>
                 </Reveal>
               ))}
@@ -164,23 +139,22 @@ export default function MediaPage() {
             ) : (
               <img
                 src={selectedModalItem.src}
-                alt={selectedModalItem.title}
+                alt={selectedModalItem.caption || 'Media item'}
                 className="max-w-full max-h-[75vh] object-contain rounded-lg shadow-2xl border border-white/10"
                 onClick={(e) => e.stopPropagation()}
               />
             )}
 
-            <div
-              className="mt-4 bg-slate-900 border border-slate-700/50 p-4 sm:p-6 rounded-xl max-w-2xl text-center shadow-lg"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <h3 className="font-extrabold text-xl sm:text-2xl text-white tracking-tight mb-2">
-                {selectedModalItem.title}
-              </h3>
-              <p className="text-slate-300 text-sm leading-relaxed">
-                {selectedModalItem.caption}
-              </p>
-            </div>
+            {selectedModalItem.caption && (
+              <div
+                className="mt-4 bg-slate-900 border border-slate-700/50 p-4 sm:p-6 rounded-xl max-w-2xl text-center shadow-lg"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <p className="text-slate-300 text-sm leading-relaxed">
+                  {selectedModalItem.caption}
+                </p>
+              </div>
+            )}
           </div>
         </div>
       )}

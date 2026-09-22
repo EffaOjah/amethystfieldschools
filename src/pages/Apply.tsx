@@ -10,37 +10,8 @@ export default function Apply() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  // File Upload State previews & names
-  const [photoPreview, setPhotoPreview] = useState<string | null>(null);
-  const [photoName, setPhotoName] = useState<string>('No File Chosen');
-  const [certName, setCertName] = useState<string>('No File Chosen');
-
   // Auto-generated student ID for office reference
   const [studentId] = useState(() => `AFS-${Math.floor(10000 + Math.random() * 90000)}`);
-
-  const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setPhotoName(file.name);
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPhotoPreview(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    } else {
-      setPhotoName('No File Chosen');
-      setPhotoPreview(null);
-    }
-  };
-
-  const handleCertChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setCertName(file.name);
-    } else {
-      setCertName('No File Chosen');
-    }
-  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -153,119 +124,7 @@ export default function Apply() {
 
             <form onSubmit={handleSubmit} className="space-y-8">
               
-              {/* CARD 1: This Information For Office Use Only */}
-              <Reveal delay={0.1}>
-                <div className="bg-white rounded-xl p-6 sm:p-8 shadow-xs border border-slate-200/90 relative">
-                  <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-6 mb-6">
-                    <div>
-                      <h2 className="text-lg font-bold text-slate-900 tracking-tight mb-1">
-                        This Information For Office Use Only
-                      </h2>
-                      <p className="text-xs text-slate-500 font-medium">
-                        System references and academic placement metadata
-                      </p>
-                    </div>
 
-                    {/* Top Right Photo Display Box */}
-                    <div className="shrink-0 self-start">
-                      <div className="w-24 h-28 sm:w-28 sm:h-32 bg-slate-100 border border-slate-200 rounded-lg overflow-hidden flex flex-col items-center justify-center text-slate-400 relative shadow-xs">
-                        {photoPreview ? (
-                          <img src={photoPreview} alt="Student Preview" className="w-full h-full object-cover" />
-                        ) : (
-                          <div className="flex flex-col items-center p-2 text-center">
-                            <span className="material-symbols-outlined text-3xl text-slate-400 mb-1">person</span>
-                            <span className="text-[10px] text-slate-400 font-medium leading-tight">Photo Preview</span>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-4 lg:gap-5">
-                    
-                    {/* Student ID */}
-                    <div className="md:col-span-1">
-                      <label className="block text-xs font-semibold text-slate-700 mb-1.5">
-                        Student ID
-                      </label>
-                      <input 
-                        type="text" 
-                        name="student_id_display" 
-                        readOnly 
-                        value={studentId} 
-                        className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-slate-800 text-sm font-semibold cursor-not-allowed focus:outline-none"
-                      />
-                    </div>
-
-                    {/* Class */}
-                    <div className="md:col-span-1">
-                      <label className="block text-xs font-semibold text-slate-700 mb-1.5">
-                        Class
-                      </label>
-                      <select 
-                        name="office_class" 
-                        className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-lg text-slate-800 text-sm focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 transition-all"
-                      >
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="JSS 1">JSS 1</option>
-                        <option value="JSS 2">JSS 2</option>
-                        <option value="JSS 3">JSS 3</option>
-                        <option value="SSS 1">SSS 1</option>
-                        <option value="SSS 2">SSS 2</option>
-                        <option value="SSS 3">SSS 3</option>
-                      </select>
-                    </div>
-
-                    {/* Section */}
-                    <div className="md:col-span-1">
-                      <label className="block text-xs font-semibold text-slate-700 mb-1.5">
-                        Section
-                      </label>
-                      <select 
-                        name="office_section" 
-                        className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-lg text-slate-800 text-sm focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 transition-all"
-                      >
-                        <option value="A">A</option>
-                        <option value="B">B</option>
-                        <option value="C">C</option>
-                      </select>
-                    </div>
-
-                    {/* Year */}
-                    <div className="md:col-span-1">
-                      <label className="block text-xs font-semibold text-slate-700 mb-1.5">
-                        Year
-                      </label>
-                      <select 
-                        name="academic_year" 
-                        className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-lg text-slate-800 text-sm focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 transition-all"
-                      >
-                        <option value="2026-2027">2026-2027</option>
-                        <option value="2025-2026">2025-2026</option>
-                      </select>
-                    </div>
-
-                    {/* Group */}
-                    <div className="md:col-span-1">
-                      <label className="block text-xs font-semibold text-slate-700 mb-1.5">
-                        Group
-                      </label>
-                      <select 
-                        name="office_group" 
-                        className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-lg text-slate-800 text-sm focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 transition-all"
-                      >
-                        <option value="Science">Science</option>
-                        <option value="Arts">Arts</option>
-                        <option value="Commercial">Commercial</option>
-                        <option value="General">General</option>
-                      </select>
-                    </div>
-
-                  </div>
-                </div>
-              </Reveal>
 
               {/* CARD 2: Student Information */}
               <Reveal delay={0.2}>
@@ -361,69 +220,6 @@ export default function Apply() {
                       </select>
                     </div>
 
-                    {/* Section */}
-                    <div>
-                      <label className="block text-xs font-semibold text-slate-700 mb-1.5">
-                        Section
-                      </label>
-                      <select 
-                        name="student_section" 
-                        className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-lg text-slate-800 text-sm focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 transition-all"
-                      >
-                        <option value="">Choose Your Section</option>
-                        <option value="Section A">Section A</option>
-                        <option value="Section B">Section B</option>
-                        <option value="Section C">Section C</option>
-                      </select>
-                    </div>
-
-                  </div>
-
-                  {/* File Upload Inputs */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-6 pt-2">
-                    
-                    {/* Upload Your Photo */}
-                    <div>
-                      <label className="block text-xs font-semibold text-slate-700 mb-1.5">
-                        Upload Your Photo <span className="text-slate-400 font-normal">(150 x 150Px)</span>
-                      </label>
-                      <div className="flex items-center bg-white border border-slate-200 rounded-lg p-1.5">
-                        <label className="cursor-pointer bg-[#662D91] hover:bg-[#522377] text-white text-xs font-semibold px-4 py-2 rounded-md shrink-0 transition-colors">
-                          Choose File
-                          <input 
-                            type="file" 
-                            accept="image/*" 
-                            onChange={handlePhotoChange} 
-                            className="hidden" 
-                          />
-                        </label>
-                        <span className="text-xs text-slate-500 truncate px-3">
-                          {photoName}
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Upload Your Birth Certificate */}
-                    <div>
-                      <label className="block text-xs font-semibold text-slate-700 mb-1.5">
-                        Upload Your Birth certificate <span className="text-slate-400 font-normal">(Pdf, img, png, Max size 2Mb)</span>
-                      </label>
-                      <div className="flex items-center bg-white border border-slate-200 rounded-lg p-1.5">
-                        <label className="cursor-pointer bg-[#662D91] hover:bg-[#522377] text-white text-xs font-semibold px-4 py-2 rounded-md shrink-0 transition-colors">
-                          Choose File
-                          <input 
-                            type="file" 
-                            accept=".pdf,image/*" 
-                            onChange={handleCertChange} 
-                            className="hidden" 
-                          />
-                        </label>
-                        <span className="text-xs text-slate-500 truncate px-3">
-                          {certName}
-                        </span>
-                      </div>
-                    </div>
-
                   </div>
                 </div>
               </Reveal>
@@ -468,12 +264,11 @@ export default function Apply() {
                     {/* Email Address */}
                     <div>
                       <label className="block text-xs font-semibold text-slate-700 mb-1.5">
-                        Email Address <span className="text-red-500">*</span>
+                        Email Address
                       </label>
                       <input 
                         type="email" 
                         name="parent_email" 
-                        required 
                         placeholder="example@email.com" 
                         className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-lg text-slate-900 text-sm placeholder:text-slate-400 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 transition-all"
                       />
