@@ -17,58 +17,6 @@ interface Blog {
 
 
 
-// Fallback school blog posts matching reference design
-const DEFAULT_BLOGS: Blog[] = [
-  {
-    id: 101,
-    title: "Continuous Testing for DevOps Success",
-    content: "Understand the role of continuous testing in DevOps pipelines and how it enhances collaboration, code quality, and deployment speed across modern development environments.",
-    author: "Laura Jenkins",
-    media_url: "",
-    created_at: "2026-03-04"
-  },
-  {
-    id: 102,
-    title: "Achieving Zero Defects with QA Automation",
-    content: "Implement QA automation practices that help minimize bugs and deliver software with zero defects while accelerating feedback cycles for development teams.",
-    author: "Priya Sharma",
-    media_url: "",
-    created_at: "2026-02-28"
-  },
-  {
-    id: 103,
-    title: "Building Scalable Testing Strategies",
-    content: "Discover strategies to design scalable QA frameworks that grow with your organization's expanding product line and evolving technical infrastructure.",
-    author: "Mark Thompson",
-    media_url: "",
-    created_at: "2026-02-12"
-  },
-  {
-    id: 104,
-    title: "Writing Test Scripts with AI Assistance",
-    content: "Learn how AI can help you generate and refine test scripts, saving time and reducing manual maintenance effort for complex test suites.",
-    author: "Maria Gonzales",
-    media_url: "",
-    created_at: "2026-02-08"
-  },
-  {
-    id: 105,
-    title: "Bridging the Gap: Developers and Testers",
-    content: "Foster collaboration between development and QA teams to enhance software quality and establish shared ownership over release reliability.",
-    author: "Monica Rivera",
-    media_url: "",
-    created_at: "2026-02-01"
-  },
-  {
-    id: 106,
-    title: "QA Automation: Challenges and Solutions",
-    content: "Overcome the common challenges faced during QA automation with tried-and-true solutions for flaky tests, test data management, and CI integration.",
-    author: "Michael Lee",
-    media_url: "",
-    created_at: "2026-01-15"
-  }
-];
-
 export default function BlogsPage() {
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [selectedBlog, setSelectedBlog] = useState<Blog | null>(null);
@@ -78,19 +26,21 @@ export default function BlogsPage() {
     const fetchBlogs = async () => {
       try {
         const { data } = await api.get('/blogs');
-        if (Array.isArray(data) && data.length > 0) {
-          setBlogs(data);
-        } else {
-          setBlogs(DEFAULT_BLOGS);
+        if (Array.isArray(data)) {
+          // Sort by date descending
+          const sorted = data.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+          setBlogs(sorted);
         }
       } catch (error) {
-        setBlogs(DEFAULT_BLOGS);
+        console.error('Failed to fetch blogs:', error);
       }
     };
     fetchBlogs();
   }, []);
 
-  const displayBlogs = blogs.length > 0 ? blogs : DEFAULT_BLOGS;
+  const itemsPerPage = 6;
+  const totalPages = Math.ceil(blogs.length / itemsPerPage);
+  const displayBlogs = blogs.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
   return (
     <PageTransition>
@@ -185,52 +135,48 @@ export default function BlogsPage() {
             </div>
 
             {/* Pagination Footer matching Reference UI */}
-            <div className="mt-14 pt-6 border-t border-slate-200/80 flex items-center justify-between text-xs font-semibold">
-              {/* Previous Button */}
-              <button 
-                disabled={currentPage === 1}
-                onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-                className="flex items-center gap-2 text-slate-400 hover:text-slate-700 transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
-              >
-                <span className="material-symbols-outlined text-sm">west</span>
-                <span>Previous</span>
-              </button>
-
-              {/* Page Number Circles with Navbar Purple #662D91 */}
-              <div className="flex items-center gap-2">
+            {totalPages > 1 && (
+              <div className="mt-14 pt-6 border-t border-slate-200/80 flex items-center justify-between text-xs font-semibold">
+                {/* Previous Button */}
                 <button 
-                  onClick={() => setCurrentPage(1)}
-                  className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center font-bold text-xs sm:text-sm transition-all ${
-                    currentPage === 1 
-                      ? 'bg-[#662D91] text-white shadow-xs' 
-                      : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-50'
-                  }`}
+                  disabled={currentPage === 1}
+                  onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                  className="flex items-center gap-2 text-slate-400 hover:text-slate-700 transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
                 >
-                  1
+                  <span className="material-symbols-outlined text-sm">west</span>
+                  <span>Previous</span>
                 </button>
+
+                {/* Page Number Circles with Navbar Purple #662D91 */}
+                <div className="flex items-center gap-2">
+                  {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                    <button 
+                      key={page}
+                      onClick={() => setCurrentPage(page)}
+                      className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center font-bold text-xs sm:text-sm transition-all ${
+                        currentPage === page 
+                          ? 'bg-[#662D91] text-white shadow-xs' 
+                          : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-50'
+                      }`}
+                    >
+                      {page}
+                    </button>
+                  ))}
+                </div>
+
+                {/* Next Button with Circle Icon in Navbar Purple #662D91 */}
                 <button 
-                  onClick={() => setCurrentPage(2)}
-                  className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center font-bold text-xs sm:text-sm transition-all ${
-                    currentPage === 2 
-                      ? 'bg-[#662D91] text-white shadow-xs' 
-                      : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-50'
-                  }`}
+                  disabled={currentPage === totalPages}
+                  onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                  className="flex items-center gap-2.5 text-slate-800 hover:text-[#662D91] transition-colors cursor-pointer group disabled:opacity-40 disabled:cursor-not-allowed"
                 >
-                  2
+                  <span className="font-bold text-xs sm:text-sm">Next</span>
+                  <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#662D91] text-white flex items-center justify-center group-hover:bg-[#522377] transition-all shadow-xs">
+                    <span className="material-symbols-outlined text-sm sm:text-base">east</span>
+                  </div>
                 </button>
               </div>
-
-              {/* Next Button with Circle Icon in Navbar Purple #662D91 */}
-              <button 
-                onClick={() => setCurrentPage(prev => Math.min(prev + 1, 2))}
-                className="flex items-center gap-2.5 text-slate-800 hover:text-[#662D91] transition-colors cursor-pointer group"
-              >
-                <span className="font-bold text-xs sm:text-sm">Next</span>
-                <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#662D91] text-white flex items-center justify-center group-hover:bg-[#522377] transition-all shadow-xs">
-                  <span className="material-symbols-outlined text-sm sm:text-base">east</span>
-                </div>
-              </button>
-            </div>
+            )}
 
           </div>
         </main>

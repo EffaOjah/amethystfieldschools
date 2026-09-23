@@ -5,10 +5,8 @@ import SEO from '../components/SEO';
 import PageTransition from '../components/PageTransition';
 import Reveal from '../components/Reveal';
 import api from '../api';
-import { localSchoolMedia } from '../data/mediaData';
-
 export default function MediaPage() {
-  const [allItems, setAllItems] = useState<any[]>(localSchoolMedia);
+  const [allItems, setAllItems] = useState<any[]>([]);
   const [selectedModalItem, setSelectedModalItem] = useState<any | null>(null);
 
   // Fetch dynamic media from API if available
@@ -28,16 +26,10 @@ export default function MediaPage() {
               };
             });
 
-          const combined: any[] = [...localSchoolMedia];
-          fetchedItems.forEach(item => {
-            if (!combined.some(c => c.src === item.src)) {
-              combined.push(item);
-            }
-          });
-          setAllItems(combined);
+          setAllItems(fetchedItems);
         }
       } catch (err) {
-        // Fallback to local school media
+        console.error('Failed to fetch media from API:', err);
       }
     };
     fetchApiMedia();
