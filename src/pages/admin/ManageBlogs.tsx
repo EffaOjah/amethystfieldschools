@@ -15,6 +15,8 @@ const ManageBlogs = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [editingId, setEditingId] = useState<number | null>(null);
   const [formData, setFormData] = useState({ title: '', content: '', author: '', media_url: '' });
+  const [file, setFile] = useState<File | null>(null);
+  const [isUploading, setIsUploading] = useState(false);
   const [message, setMessage] = useState({ type: '', text: '' });
 
   const fetchBlogs = async () => {
@@ -38,23 +40,50 @@ const ManageBlogs = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setMessage({ type: '', text: '' });
+    setIsUploading(true);
 
     try {
+      let finalMediaUrl = formData.media_url;
+
+      // If a new file is selected, upload it to media endpoint first
+      if (file) {
+        const uploadData = new FormData();
+        uploadData.append('title', `Blog Image: ${formData.title}`);
+        uploadData.append('media', file);
+
+        const uploadRes = await api.post('/media/upload', uploadData, {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        });
+        
+        finalMediaUrl = uploadRes.data.url;
+      }
+
+      const blogData = {
+        ...formData,
+        media_url: finalMediaUrl
+      };
+
       if (isEditing && editingId) {
-        await api.put(`/blogs/${editingId}`, formData);
+        await api.put(`/blogs/${editingId}`, blogData);
         setMessage({ type: 'success', text: 'Blog updated successfully!' });
       } else {
-        await api.post('/blogs', formData);
+        await api.post('/blogs', blogData);
         setMessage({ type: 'success', text: 'Blog created successfully!' });
       }
       
       setFormData({ title: '', content: '', author: '', media_url: '' });
+      setFile(null);
+      const fileInput = document.getElementById('mediaFile') as HTMLInputElement;
+      if (fileInput) fileInput.value = '';
+      
       setIsEditing(false);
       setEditingId(null);
       fetchBlogs();
     } catch (error) {
       console.error('Error saving blog:', error);
       setMessage({ type: 'danger', text: 'Failed to save blog.' });
+    } finally {
+      setIsUploading(false);
     }
   };
 
@@ -69,6 +98,9 @@ const ManageBlogs = () => {
     setIsEditing(false);
     setEditingId(null);
     setFormData({ title: '', content: '', author: '', media_url: '' });
+    setFile(null);
+    const fileInput = document.getElementById('mediaFile') as HTMLInputElement;
+    if (fileInput) fileInput.value = '';
     setMessage({ type: '', text: '' });
   };
 
@@ -111,15 +143,35 @@ const ManageBlogs = () => {
                 <input type="text" className="form-control" id="author" name="author" value={formData.author} onChange={handleInputChange} required />
               </div>
               <div className="form-group">
-                <label htmlFor="media_url">Media URL (Optional Image)</label>
-                <input type="text" className="form-control" id="media_url" name="media_url" value={formData.media_url} onChange={handleInputChange} />
+                <label htmlFor="mediaFile">Upload Cover Image (Optional)</label>
+                <input 
+                  type="file" 
+                  className="form-control" 
+                  id="mediaFile" 
+                  accept="image/*"
+                  onChange={(e) => {
+                    if (e.target.files && e.target.files[0]) {
+                      setFile(e.target.files[0]);
+                    }
+                  }} 
+                />
+                {formData.media_url && !file && (
+                  <small className="form-text text-muted d-block mt-2">
+                    Current image: <a href={formData.media_url} target="_blank" rel="noopener noreferrer">View</a>
+                  </small>
+                )}
+                {file && (
+                  <small className="form-text text-info d-block mt-2">
+                    New file selected: {file.name}
+                  </small>
+                )}
               </div>
               <div className="form-group">
                 <label htmlFor="content">Content</label>
                 <textarea className="form-control" id="content" name="content" rows={5} value={formData.content} onChange={handleInputChange} required></textarea>
               </div>
-              <button type="submit" className="btn btn-primary me-2">
-                {isEditing ? 'Update Blog' : 'Publish Blog'}
+              <button type="submit" className="btn btn-primary me-2" disabled={isUploading}>
+                {isUploading ? 'Saving...' : isEditing ? 'Update Blog' : 'Publish Blog'}
               </button>
               {isEditing && (
                 <button type="button" className="btn btn-light" onClick={handleCancelEdit}>

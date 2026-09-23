@@ -11,6 +11,7 @@ const AdminLayout = () => {
   useEffect(() => {
     // Dynamically inject CSS
     const styles = [
+      'https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap',
       '/admin-assets/vendors/feather/feather.css',
       '/admin-assets/vendors/mdi/css/materialdesignicons.min.css',
       '/admin-assets/vendors/ti-icons/css/themify-icons.css',
@@ -104,53 +105,68 @@ const AdminLayout = () => {
     <div className="container-scroller">
       {/* Custom styles to make it less plain */}
       <style>{`
+        body, .container-scroller {
+          font-family: 'Open Sans', sans-serif !important;
+        }
         .navbar.default-layout {
-          background: #662D91 !important;
-          box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+          background: #ffffff !important;
+          border-bottom: 1px solid #eef2f5 !important;
+          box-shadow: none !important;
         }
         .navbar .navbar-brand-wrapper,
         .navbar .navbar-menu-wrapper {
           background: transparent !important;
         }
         .navbar .navbar-brand h3 {
-          color: #ffffff !important;
-          letter-spacing: 1px;
+          color: #8b5cf6 !important;
+          font-weight: 700;
+          letter-spacing: 0.5px;
         }
-        .navbar .welcome-text, .navbar .welcome-text span, .navbar .welcome-sub-text {
-          color: #ffffff !important;
+        .navbar .welcome-text {
+          color: #334155 !important;
+          font-size: 1.1rem;
+        }
+        .navbar .welcome-sub-text {
+          color: #94a3b8 !important;
+          font-size: 0.85rem;
         }
         .navbar .navbar-toggler span, .navbar .nav-link i {
-          color: #ffffff !important;
+          color: #64748b !important;
         }
         .sidebar {
-          background: #662D91 !important;
-          box-shadow: 2px 0 20px rgba(0,0,0,0.05);
+          background: #ffffff !important;
+          border-right: 1px solid #eef2f5 !important;
+          box-shadow: none !important;
         }
         .sidebar .nav .nav-item {
           padding: 0 15px;
           margin-bottom: 5px;
         }
         .sidebar .nav .nav-item .nav-link {
-          border-radius: 12px;
+          border-radius: 8px;
           transition: all 0.3s ease;
-          color: rgba(255, 255, 255, 0.8) !important;
+          color: #64748b !important;
           background: transparent !important;
+          font-weight: 600;
         }
         .sidebar .nav .nav-item .nav-link i {
-          color: rgba(255, 255, 255, 0.8) !important;
+          color: #94a3b8 !important;
         }
         .sidebar .nav .nav-item.custom-active > .nav-link {
-          background: rgba(255, 255, 255, 0.2) !important;
-          color: #ffffff !important;
-          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+          background: #f3e8ff !important;
+          color: #8b5cf6 !important;
+          box-shadow: none !important;
         }
         .sidebar .nav .nav-item.custom-active > .nav-link i {
-          color: #ffffff !important;
+          color: #8b5cf6 !important;
         }
         .sidebar .nav .nav-item .nav-link:hover {
-          background: rgba(255, 255, 255, 0.1) !important;
-          transform: translateX(5px);
-          color: #ffffff !important;
+          background: #f8fafc !important;
+          color: #8b5cf6 !important;
+          transform: translateX(4px);
+        }
+        .sidebar .nav .nav-item .nav-link:hover i {
+          color: #8b5cf6 !important;
         }
         .sidebar .nav .nav-item .menu-title {
           color: inherit !important;
@@ -159,14 +175,27 @@ const AdminLayout = () => {
           background: #f8f9fa !important;
         }
         .btn-primary, .btn-info, .btn-outline-info {
-          background-color: #662D91 !important;
-          border-color: #662D91 !important;
+          background-color: #14b8a6 !important;
+          border-color: #14b8a6 !important;
           color: #ffffff !important;
+          border-radius: 6px;
+          font-weight: 600;
         }
         .btn-primary:hover, .btn-info:hover, .btn-outline-info:hover {
-          background-color: #512474 !important;
-          border-color: #512474 !important;
+          background-color: #0d9488 !important;
+          border-color: #0d9488 !important;
           color: #ffffff !important;
+        }
+        .page-body-wrapper {
+          padding-top: 70px !important;
+        }
+        @media (max-width: 991px) {
+          .page-body-wrapper {
+            padding-top: 85px !important;
+          }
+          .content-wrapper {
+            padding-top: 1rem !important;
+          }
         }
       `}</style>
       {/* Top Navbar */}
@@ -189,18 +218,19 @@ const AdminLayout = () => {
         <div className="navbar-menu-wrapper d-flex align-items-top">
           <ul className="navbar-nav">
             <li className="nav-item fw-semibold d-none d-lg-block ms-0">
-              <h1 className="welcome-text">Hello, <span className="fw-bold">Admin</span></h1>
-              <h3 className="welcome-sub-text">Welcome to the AMF Admin Portal</h3>
+              <h1 className="welcome-text">Hello, <span className="text-black fw-bold">Admin</span></h1>
+              <h3 className="welcome-sub-text">Home {'>'} Dashboard</h3>
             </li>
           </ul>
-          <ul className="navbar-nav ms-auto">
+          <ul className="navbar-nav ms-auto gap-3 d-flex align-items-center">
+
             <li className="nav-item dropdown d-none d-lg-block user-dropdown">
               <a className="nav-link" id="UserDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
-                <div className="img-xs rounded-circle bg-light text-primary d-flex align-items-center justify-content-center fw-bold">A</div>
+                <div className="img-xs rounded-circle bg-purple-100 text-purple-700 d-flex align-items-center justify-content-center fw-bold" style={{ backgroundColor: '#f3e8ff', color: '#8b5cf6' }}>A</div>
               </a>
-              <div className="dropdown-menu dropdown-menu-right navbar-dropdown shadow-lg border-0" aria-labelledby="UserDropdown">
+              <div className="dropdown-menu dropdown-menu-right navbar-dropdown shadow-sm border-0" aria-labelledby="UserDropdown">
                 <div className="dropdown-header text-center">
-                  <div className="img-md rounded-circle bg-primary text-white d-flex align-items-center justify-content-center mx-auto fw-bold">A</div>
+                  <div className="img-md rounded-circle d-flex align-items-center justify-content-center mx-auto fw-bold" style={{ backgroundColor: '#f3e8ff', color: '#8b5cf6' }}>A</div>
                   <p className="mb-1 mt-3 fw-semibold text-dark">Admin</p>
                 </div>
                 <Link to="/" className="dropdown-item"><i className="dropdown-item-icon mdi mdi-web text-primary me-2"></i> View Website</Link>
@@ -222,7 +252,7 @@ const AdminLayout = () => {
       <div className="container-fluid page-body-wrapper">
         {/* Sidebar */}
         <nav className={`sidebar sidebar-offcanvas ${isSidebarOpen ? 'active' : ''}`} id="sidebar">
-          <ul className="nav mt-3">
+          <ul className="nav pt-4 mt-3">
             {navItems.map((item) => {
               const isActive = location.pathname === item.path || (item.path !== '/admin' && location.pathname.startsWith(item.path));
               return (
@@ -234,6 +264,12 @@ const AdminLayout = () => {
                 </li>
               );
             })}
+            <li className="nav-item mt-4">
+              <a className="nav-link" onClick={handleLogout} style={{ cursor: 'pointer', color: '#ef4444' }}>
+                <i className="mdi mdi-power menu-icon" style={{ color: '#ef4444' }}></i>
+                <span className="menu-title font-weight-medium">Logout</span>
+              </a>
+            </li>
           </ul>
         </nav>
 
